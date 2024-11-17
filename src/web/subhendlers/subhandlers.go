@@ -89,5 +89,21 @@ func AddHandler(r *http.Request) {
 
 func UpdateHandler(r *http.Request) {
 	data := models.PersonData{}
-	_ = data.FirstName
+
+	data.FirstName = r.FormValue("field" + strconv.Itoa(1))
+	data.LastName = r.FormValue("field" + strconv.Itoa(2))
+	data.MiddleName = r.FormValue("field" + strconv.Itoa(3))
+	data.Street = r.FormValue("field" + strconv.Itoa(4))
+	data.House = r.FormValue("field" + strconv.Itoa(5))
+	data.Building = r.FormValue("field" + strconv.Itoa(6))
+	data.Apartment = r.FormValue("field" + strconv.Itoa(7))
+	data.PhoneNumber = r.FormValue("field" + strconv.Itoa(8))
+
+	jsonData := formJsonStr(data)
+
+	_, err := http.Post("http://127.0.0.1:8080/update", "application/json", bytes.NewBuffer(jsonData))
+
+	if err != nil {
+		log.Println(err.Error())
+	}
 }

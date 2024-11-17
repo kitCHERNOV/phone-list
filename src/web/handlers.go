@@ -119,6 +119,29 @@ func AddHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func UpdateHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", 405)
+	}
+	var data models.PersonData
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&data); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	db, err := psql.OpenConn()
+	if err != nil {
+		log.Println(err)
+	}
+	defer db.DB.Close()
+
+	err = db.Update(&data)
+	if err != nil {
+		log.Println(err)
+	}
+
+}
+
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	//http.ServeFile(w, r, "./internal/html/main.html")
 
@@ -163,8 +186,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, "Internal Server Error", 500)
 			}
 		}
+		fmt.Println(r.FormValue("update"))
 		if r.FormValue("update") == "Update" {
-
+			fmt.Println("\n\nUpdate function called\n\n")
 			sh.UpdateHandler(r)
 
 			tp, err := template.ParseFiles("./internal/html/main.html")

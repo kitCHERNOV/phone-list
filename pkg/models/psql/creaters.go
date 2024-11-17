@@ -2,6 +2,7 @@ package psql
 
 import (
 	"fmt"
+	"log"
 	"telesp/pkg/models"
 )
 
@@ -63,4 +64,75 @@ func CreateSqlQuery(storage *models.PersonData) string {
 	Query += ";"
 	//fmt.Println("Query:", Query)
 	return Query
+}
+
+func CreateSubUpdateQuery(m *TeleSp, storage *models.PersonData) [8]int {
+	var params = [8]int{}
+	tx, err := m.DB.Begin()
+	if err != nil {
+		log.Println(err)
+	}
+
+	defer func() {
+		if err != nil {
+			// IF find mistake,just rollback tx
+			if rollbackerr := tx.Rollback(); rollbackerr != nil {
+				log.Fatalf("Transaction have not opened: %v", rollbackerr)
+			}
+		} else {
+			if commitErr := tx.Commit(); commitErr != nil {
+				log.Fatalf("Transaction have not done: %v", commitErr)
+			}
+		}
+	}()
+
+	// Execute sql queries
+	if storage.FirstName != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_firstname($1)", storage.FirstName).Scan(&params[0])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	if storage.FirstName != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_lastname($1)", storage.LastName).Scan(&params[1])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	if storage.FirstName != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_middlename($1)", storage.MiddleName).Scan(&params[2])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	if storage.FirstName != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_street($1)", storage.Street).Scan(&params[3])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	if storage.FirstName != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_house($1)", storage.House).Scan(&params[4])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	if storage.FirstName != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_building($1)", storage.Building).Scan(&params[5])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	if storage.FirstName != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_apartment($1)", storage.Apartment).Scan(&params[6])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	err = tx.QueryRow("SELECT insert_or_get_id_of_phonenumber($1)", storage.PhoneNumber).Scan(&params[7])
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("params", params)
+	return params
 }

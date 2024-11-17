@@ -17,6 +17,7 @@ func main() {
 	mux.HandleFunc("/", http.HandlerFunc(web.IndexHandler))
 	mux.HandleFunc("/send", web.SendHandler)
 	mux.HandleFunc("/add", web.AddHandler)
+	mux.HandleFunc("/update", web.UpdateHandler)
 	// mux.HandleFunc("/snippet", web.ShowSnippet)
 	// mux.HandleFunc("/snippet/create", web.CreateSnippet)
 
