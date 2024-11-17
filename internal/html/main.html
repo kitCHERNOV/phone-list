@@ -26,6 +26,18 @@
             color: #495057;
         }
 
+        .input-menu {
+            padding: 5px;
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+
+        .input-menu > * {
+            flex: 1;
+            margin-right: 10px;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
@@ -58,81 +70,80 @@
 
 <body>
 
-<div class="container">
-    <h1>Phone Book</h1>
-    <form id="myForm" action="/" method="POST">
-        <!-- First Name -->
-        <div class="form-group">
-            <label for="field1">First Name</label>
-            <input type="text" id="field1" name="field1" class="form-control" placeholder="Enter your first name">
-        </div>
+    <div class="container">
+        <h1>Phone Book</h1>
+        <form id="myForm" action="/" method="POST">
+            <div class="input-menu">
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="field1">First Name</label>
+                    <input type="text" id="field1" name="field1" class="form-control" placeholder="First name">
+                </div>
 
-        <!-- Last Name -->
-        <div class="form-group">
-            <label for="field2">Last Name</label>
-            <input type="text" id="field2" name="field2" class="form-control" placeholder="Enter your last name">
-        </div>
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="field2">Last Name</label>
+                    <input type="text" id="field2" name="field2" class="form-control" placeholder="Last name">
+                </div>
 
-        <!-- Middle Name -->
-        <div class="form-group">
-            <label for="field3">Middle Name</label>
-            <input type="text" id="field3" name="field3" class="form-control" placeholder="Enter your middle name">
-        </div>
+                <!-- Middle Name -->
+                <div class="form-group">
+                    <label for="field3">Middle Name</label>
+                    <input type="text" id="field3" name="field3" class="form-control" placeholder="Middle name">
+                </div>
 
-        <!-- Street -->
-        <div class="form-group">
-            <label for="field4">Street</label>
-            <input type="text" id="field4" name="field4" class="form-control" placeholder="Enter street name">
-        </div>
+                <!-- Street -->
+                <div class="form-group">
+                    <label for="field4">Street</label>
+                    <input type="text" id="field4" name="field4" class="form-control" placeholder="Street name">
+                </div>
 
-        <!-- House -->
-        <div class="form-group">
-            <label for="field5">House</label>
-            <input type="text" id="field5" name="field5" class="form-control" placeholder="Enter house number">
-        </div>
+                <!-- House -->
+                <div class="form-group">
+                    <label for="field5">House</label>
+                    <input type="text" id="field5" name="field5" class="form-control" placeholder="House number">
+                </div>
 
-        <!-- Building -->
-        <div class="form-group">
-            <label for="field6">Building</label>
-            <input type="text" id="field6" name="field6" class="form-control" placeholder="Enter building name">
-        </div>
+                <!-- Building -->
+                <div class="form-group">
+                    <label for="field6">Building</label>
+                    <input type="text" id="field6" name="field6" class="form-control" placeholder="Building name">
+                </div>
 
-        <!-- Apartment -->
-        <div class="form-group">
-            <label for="field7">Apartment</label>
-            <input type="text" id="field7" name="field7" class="form-control" placeholder="Enter apartment number">
-        </div>
+                <!-- Apartment -->
+                <div class="form-group">
+                    <label for="field7">Apartment</label>
+                    <input type="text" id="field7" name="field7" class="form-control" placeholder="Apartment number">
+                </div>
 
-        <!-- Phone Number -->
-        <div class="form-group">
-            <label for="field8">Phone Number</label>
-            <input type="text" id="field8" name="field8" class="form-control" placeholder="Enter phone number">
-        </div>
 
-        <!-- Buttons -->
-        <div class="text-center mt-4">
-            <input type="submit" name="search" class="btn btn-outline-success" value="Select">
-            <input type="submit" name="add" class="btn btn-outline-primary" value="Add">
-            <input type="submit" name="update" class="btn btn-outline-warning" value="Update">
-            <input type="submit" name="delete" class="btn btn-outline-danger" value="Delete">
-        </div>
-    </form>
-</div>
-
-<!-- Phone Book Data -->
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
-            <h5>Phone Book Data</h5>
-        </div>
-        <ul id="dataList" class="list-group list-group-flush">
-            {{range .}}
-            <li class="list-group-item">{{.}}</li>
-            {{end}}
-        </ul>
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="field8">Phone Number</label>
+                    <input type="text" id="field8" name="field8" class="form-control" placeholder="Phone number">
+                </div>
+            </div>
+            <!-- Buttons -->
+            <div class="text-center mt-4">
+                <input type="submit" name="search" class="btn btn-outline-success" value="Select">
+                <input type="submit" name="add" class="btn btn-outline-primary" value="Add">
+                <input type="submit" name="update" class="btn btn-outline-warning" value="Update">
+                <input type="submit" name="delete" class="btn btn-outline-danger" value="Delete">
+            </div>
+        </form>
     </div>
-</div>
-
+    <!-- Phone Book Data -->
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Phone Book Data</h5>
+            </div>
+            <ul id="dataList" class="list-group list-group-flush">
+                {{range .}}
+                <li class="list-group-item">{{.}}</li>
+                {{end}}
+            </ul>
+        </div>
+    </div>
 </body>
-
 </html>
