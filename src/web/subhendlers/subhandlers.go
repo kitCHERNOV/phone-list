@@ -107,3 +107,16 @@ func UpdateHandler(r *http.Request) {
 		log.Println(err.Error())
 	}
 }
+
+func DeleteHandler(r *http.Request) {
+	data := models.PersonData{}
+	data.PhoneNumber = r.FormValue("field" + strconv.Itoa(8))
+
+	jsonData := formJsonStr(data)
+
+	_, err := http.Post("http://127.0.0.1:8080/delete", "application/json", bytes.NewBuffer(jsonData))
+
+	if err != nil {
+		log.Println(err.Error())
+	}
+}

@@ -18,6 +18,7 @@ func main() {
 	mux.HandleFunc("/send", web.SendHandler)
 	mux.HandleFunc("/add", web.AddHandler)
 	mux.HandleFunc("/update", web.UpdateHandler)
+	mux.HandleFunc("/delete", web.DeleteHandler)
 	// mux.HandleFunc("/snippet", web.ShowSnippet)
 	// mux.HandleFunc("/snippet/create", web.CreateSnippet)
 

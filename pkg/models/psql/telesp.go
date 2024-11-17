@@ -113,6 +113,16 @@ func (m *TeleSp) Update(storage *models.PersonData) error {
 	return nil
 }
 
+func (m *TeleSp) Delete(storage *models.PersonData) error {
+	query := "DELETE FROM main " +
+		"WHERE main.phone_number = (SELECT id from phonenumber WHERE phonenumber.phonenumber_val = $1);"
+	_, err := m.DB.Exec(query, storage.PhoneNumber)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // Find - select func for looking for based offered params
 // TODO: add [id] param into Get func
 func (m *TeleSp) Get(storage *models.PersonData) []models.PersonData {

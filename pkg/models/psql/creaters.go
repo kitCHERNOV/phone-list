@@ -72,7 +72,7 @@ func CreateSubUpdateQuery(m *TeleSp, storage *models.PersonData) [8]int {
 	if err != nil {
 		log.Println(err)
 	}
-
+	fmt.Println(storage.Street, storage.PhoneNumber)
 	defer func() {
 		if err != nil {
 			// IF find mistake,just rollback tx
@@ -88,48 +88,48 @@ func CreateSubUpdateQuery(m *TeleSp, storage *models.PersonData) [8]int {
 
 	// Execute sql queries
 	if storage.FirstName != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_firstname($1)", storage.FirstName).Scan(&params[0])
+		err := tx.QueryRow("SELECT insert_or_get_id_of_firstname($1);", storage.FirstName).Scan(&params[0])
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
-	if storage.FirstName != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_lastname($1)", storage.LastName).Scan(&params[1])
+	if storage.LastName != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_lastname($1);", storage.LastName).Scan(&params[1])
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
-	if storage.FirstName != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_middlename($1)", storage.MiddleName).Scan(&params[2])
+	if storage.MiddleName != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_middlename($1);", storage.MiddleName).Scan(&params[2])
+		if err != nil {
+			tx.Rollback()
+		}
+	}
+	if storage.Street != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_street($1);", storage.Street).Scan(&params[3])
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
-	if storage.FirstName != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_street($1)", storage.Street).Scan(&params[3])
+	if storage.House != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_house($1);", storage.House).Scan(&params[4])
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
-	if storage.FirstName != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_house($1)", storage.House).Scan(&params[4])
+	if storage.Building != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_building($1);", storage.Building).Scan(&params[5])
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
-	if storage.FirstName != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_building($1)", storage.Building).Scan(&params[5])
+	if storage.Apartment != "" {
+		err := tx.QueryRow("SELECT insert_or_get_id_of_apartment($1);", storage.Apartment).Scan(&params[6])
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
-	if storage.FirstName != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_apartment($1)", storage.Apartment).Scan(&params[6])
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-	err = tx.QueryRow("SELECT insert_or_get_id_of_phonenumber($1)", storage.PhoneNumber).Scan(&params[7])
+	err = tx.QueryRow("SELECT insert_or_get_id_of_phonenumber($1);", storage.PhoneNumber).Scan(&params[7])
 	if err != nil {
 		log.Fatal(err)
 	}

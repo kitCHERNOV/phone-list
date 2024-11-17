@@ -142,6 +142,28 @@ func UpdateHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func DeleteHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", 405)
+	}
+	var data models.PersonData
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&data); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	db, err := psql.OpenConn()
+	if err != nil {
+		log.Println(err)
+	}
+	defer db.DB.Close()
+
+	err = db.Delete(&data)
+	if err != nil {
+		log.Println(err)
+	}
+}
+
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	//http.ServeFile(w, r, "./internal/html/main.html")
 
@@ -202,6 +224,18 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		if r.FormValue("delete") == "Delete" {
+			fmt.Println("Delete function called")
+			sh.DeleteHandler(r)
+
+			tp, err := template.ParseFiles("./internal/html/main.html")
+			if err != nil {
+				log.Println(err.Error())
+			}
+			err = tp.Execute(w, nil)
+			if err != nil {
+				log.Println(err.Error())
+				http.Error(w, "Internal Server Error", 500)
+			}
 		}
 	}
 
