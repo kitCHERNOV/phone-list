@@ -20,7 +20,7 @@ func formJsonStr(data models.PersonData) []byte {
 	return jsonData
 }
 
-func SelectHandler(r *http.Request) []string {
+func SelectHandler(r *http.Request) []models.PersonData {
 	data := models.PersonData{}
 	respData := []models.PersonData{}
 
@@ -57,12 +57,11 @@ func SelectHandler(r *http.Request) []string {
 	//fmt.Println(data.FirstName)
 	//fmt.Println(data.LastName)
 
-	showDataArr := []string{}
-	for _, v := range respData {
-		showDataArr = append(showDataArr, fmt.Sprintf("%v %v %v %v %v %v %v %v", v.FirstName, v.LastName, v.MiddleName, v.Street, v.House, v.Building, v.Apartment, v.PhoneNumber))
-	}
+	//for _, v := range respData {
+	//	showDataArr = append(showDataArr, fmt.Sprintf("%v %v %v %v %v %v %v %v", v.FirstName, v.LastName, v.MiddleName, v.Street, v.House, v.Building, v.Apartment, v.PhoneNumber))
+	//}
 
-	return showDataArr
+	return respData
 }
 
 func AddHandler(r *http.Request) {

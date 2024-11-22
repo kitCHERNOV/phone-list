@@ -7,7 +7,7 @@ import (
 var ErrNorecord = errors.New("models: matche note not found")
 
 type PersonData struct {
-	ID          int
+	ID          int    `json:"id"`
 	FirstName   string `json:"first_name"`
 	LastName    string `json:"last_name"`
 	MiddleName  string `json:"middle_name"` // Я как понял это отчество

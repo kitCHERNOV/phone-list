@@ -138,11 +138,46 @@
             <div class="card-header">
                 <h5>Phone Book Data</h5>
             </div>
-            <ul id="dataList" class="list-group list-group-flush">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Middle Name</th>
+                    <th>Street</th>
+                    <th>House</th>
+                    <th>Building</th>
+                    <th>Apartment</th>
+                    <th>Phone Number</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
                 {{range .}}
-                <li class="list-group-item">{{.}}</li>
+                <tr>
+                    <td>{{.FirstName}}</td>
+                    <td>{{.LastName}}</td>
+                    <td>{{.MiddleName}}</td>
+                    <td>{{.Street}}</td>
+                    <td>{{.House}}</td>
+                    <td>{{.Building}}</td>
+                    <td>{{.Apartment}}</td>
+                    <td>{{.PhoneNumber}}</td>
+                    <td>
+                        <form action="/" method="POST">
+                            <input type="hidden" name="certain_delete" value="{{.ID}}">
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                        </form>
+                    </td>
+                </tr>
                 {{end}}
-            </ul>
+                </tbody>
+            </table>
+<!--            <ul id="dataList" class="list-group list-group-flush">-->
+<!--                {{range .}}-->
+<!--                <li class="list-group-item">{{.FirstName}}</li>-->
+<!--                {{end}}-->
+<!--            </ul>-->
         </div>
     </div>
 </body>

@@ -186,7 +186,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 			showDataArr := sh.SelectHandler(r)
-
+			for _, v := range showDataArr {
+				fmt.Println(v.FirstName)
+			}
 			err = tp.Execute(w, showDataArr)
 			if err != nil {
 				log.Println(err.Error())
@@ -223,7 +225,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, "Internal Server Error", 500)
 			}
 		}
-		if r.FormValue("delete") == "Delete" {
+		if r.FormValue("delete") != "" {
 			fmt.Println("Delete function called")
 			sh.DeleteHandler(r)
 
@@ -236,6 +238,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 				log.Println(err.Error())
 				http.Error(w, "Internal Server Error", 500)
 			}
+		}
+		if r.FormValue("certain_delete") != "" {
+
 		}
 	}
 
