@@ -7,7 +7,7 @@ import (
 )
 
 func AllRows() string {
-	Query := "SELECT firstname.firstname_val, lastname.lastname_val, middlename.middlename_val, street.street_val," +
+	Query := "SELECT main.id, firstname.firstname_val, lastname.lastname_val, middlename.middlename_val, street.street_val," +
 		"house.house_val, apartment.apartment_val, building.building_val, phonenumber.phonenumber_val " +
 		"FROM main " +
 		"JOIN firstname ON firstname.id = main.first_name " +

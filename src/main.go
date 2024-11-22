@@ -19,6 +19,9 @@ func main() {
 	mux.HandleFunc("/add", web.AddHandler)
 	mux.HandleFunc("/update", web.UpdateHandler)
 	mux.HandleFunc("/delete", web.DeleteHandler)
+
+	// Work with certain elements
+	mux.HandleFunc("/certain-delete", web.CertainDeleteHandler)
 	// mux.HandleFunc("/snippet", web.ShowSnippet)
 	// mux.HandleFunc("/snippet/create", web.CreateSnippet)
 

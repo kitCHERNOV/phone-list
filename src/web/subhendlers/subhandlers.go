@@ -119,3 +119,41 @@ func DeleteHandler(r *http.Request) {
 		log.Println(err.Error())
 	}
 }
+
+// Part of work with certain elements
+func SubCertainDeleteHandler(r *http.Request) {
+	valueId, err := strconv.Atoi(r.FormValue("certain-delete"))
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	jsonData := formJsonStr(models.PersonData{ID: valueId})
+
+	_, err = http.Post("http://127.0.0.1:8080/certain-delete", "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		log.Println(err.Error())
+	}
+}
+
+func SubCertainUpdateHandler(r *http.Request) {
+	data := models.PersonData{}
+	data.ID, _ = strconv.Atoi(r.FormValue("certain-update"))
+	data.FirstName = r.FormValue("FirstName")
+	data.LastName = r.FormValue("LastName")
+	data.MiddleName = r.FormValue("MiddleName")
+	data.Street = r.FormValue("Street")
+	data.House = r.FormValue("House")
+	data.Building = r.FormValue("Building")
+	data.Apartment = r.FormValue("Apartment")
+	data.PhoneNumber = r.FormValue("PhoneNumber")
+
+	fmt.Println(data.ID)
+	fmt.Println(data.FirstName)
+	fmt.Println(data.LastName)
+	fmt.Println(data.MiddleName)
+	fmt.Println(data.Street)
+	fmt.Println(data.House)
+	fmt.Println(data.Building)
+	fmt.Println(data.Apartment)
+	fmt.Println(data.PhoneNumber)
+}

@@ -24,6 +24,7 @@ type Message struct {
 var storageData = models.TestPerson{}
 var logger = slog.Logger{}
 var msg Message
+var showData = []models.PersonData{}
 
 func Home(w http.ResponseWriter, r *http.Request) {
 	// Check if cur url match "/" template
@@ -172,7 +173,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Println(err.Error())
 		}
-		err = tp.Execute(w, nil)
+		err = tp.Execute(w, showData)
 		if err != nil {
 			log.Println(err.Error())
 			http.Error(w, "Internal Server Error", 500)
@@ -185,17 +186,20 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 				log.Println(err.Error())
 			}
 
-			showDataArr := sh.SelectHandler(r)
-			for _, v := range showDataArr {
-				fmt.Println(v.FirstName)
-			}
-			err = tp.Execute(w, showDataArr)
+			showData = sh.SelectHandler(r)
+			//for _, v := range showDataArr {
+			//	fmt.Println(v.FirstName)
+			//}
+
+			err = tp.Execute(w, showData)
+
 			if err != nil {
 				log.Println(err.Error())
 				http.Error(w, "Internal Server Error", 500)
 			}
 
 		}
+
 		if r.FormValue("add") == "Add" {
 
 			sh.AddHandler(r)
@@ -239,8 +243,34 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, "Internal Server Error", 500)
 			}
 		}
-		if r.FormValue("certain_delete") != "" {
+		if r.FormValue("certain-delete") != "" {
+			fmt.Println("Certain delete function called")
 
+			sh.SubCertainDeleteHandler(r)
+
+			tp, err := template.ParseFiles("./internal/html/main.html")
+			if err != nil {
+				log.Println(err.Error())
+			}
+			err = tp.Execute(w, nil)
+			if err != nil {
+				log.Println(err.Error())
+				http.Error(w, "Internal Server Error", 500)
+			}
+		}
+		if r.FormValue("certain-update") != "" {
+			fmt.Println("Certain update function called")
+
+			sh.SubCertainUpdateHandler(r)
+			tp, err := template.ParseFiles("./internal/html/main.html")
+			if err != nil {
+				log.Println(err.Error())
+			}
+			err = tp.Execute(w, showData)
+			if err != nil {
+				log.Println(err.Error())
+				http.Error(w, "Internal Server Error", 500)
+			}
 		}
 	}
 

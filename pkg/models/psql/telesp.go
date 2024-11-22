@@ -143,7 +143,7 @@ func (m *TeleSp) Get(storage *models.PersonData) []models.PersonData {
 	//
 	for rows.Next() {
 		p := models.PersonData{}
-		rows.Scan(&p.FirstName, &p.LastName, &p.MiddleName, &p.Street, &p.House, &p.Building, &p.Apartment, &p.PhoneNumber)
+		rows.Scan(&p.ID, &p.FirstName, &p.LastName, &p.MiddleName, &p.Street, &p.House, &p.Building, &p.Apartment, &p.PhoneNumber)
 		response = append(response, p)
 	}
 

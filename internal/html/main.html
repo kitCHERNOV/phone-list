@@ -132,6 +132,29 @@
             </div>
         </form>
     </div>
+    <script>
+    // Функция для отображения формы редактирования
+    function showEditForm(id) {
+        var form = document.getElementById('edit-form-' + id);
+        form.style.display = 'block'; // Показываем форму
+
+        // Скрываем кнопки Update и Delete
+        var updateButton = document.getElementById('update-btn-' + id)
+        var deleteButton = document.getElementById('delete-btn-' + id)
+
+        updateButton.style.display = 'none'
+        deleteButton.style.display = 'none'
+    }
+    // // Функция отправки формы
+    // function updateRow(event, id) {
+    //     event.
+    // }
+    // Функция для отмены редактирования (скрытие формы)
+    function cancelEdit(id) {
+        var form = document.getElementById('edit-form-' + id);
+        form.style.display = 'none'; // Скрываем форму
+    }
+    </script>
     <!-- Phone Book Data -->
     <div class="container mt-4">
         <div class="card">
@@ -164,10 +187,59 @@
                     <td>{{.Apartment}}</td>
                     <td>{{.PhoneNumber}}</td>
                     <td>
-                        <form action="/" method="POST">
-                            <input type="hidden" name="certain_delete" value="{{.ID}}">
-                            <button type="submit" class="btn btn-primary">Delete</button>
-                        </form>
+                        <div class="d-flex">
+<!--                            <form action="/" method="POST">-->
+<!--                                <input type="hidden" name="certain-update" value="{{.ID}}">-->
+<!--                                <button type="submit" class="btn btn-warning">Update</button>-->
+<!--                            </form>-->
+                            <!-- Форма для редактирования -->
+                            <form action="/" method="POST" id="edit-form-{{.ID}}" style="display:none;">
+                                <input type="hidden" name="certain-update" value="{{.ID}}">
+                                <div>
+                                    <label for="FirstName">First Name</label>
+                                    <input type="text" id="FirstName" name="FirstName" value="{{.FirstName}}">
+                                </div>
+                                <div>
+                                    <label for="LastName">Last Name</label>
+                                    <input type="text" id="LastName" name="LastName" value="{{.LastName}}">
+                                </div>
+                                <div>
+                                    <label for="MiddleName">Middle Name</label>
+                                    <input type="text" id="MiddleName" name="MiddleName" value="{{.MiddleName}}">
+                                </div>
+                                <div>
+                                    <label for="Street">Street</label>
+                                    <input type="text" id="Street" name="Street" value="{{.Street}}">
+                                </div>
+                                <div>
+                                    <label for="House">House</label>
+                                    <input type="text" id="House" name="House" value="{{.House}}">
+                                </div>
+                                <div>
+                                    <label for="Building">Building</label>
+                                    <input type="text" id="Building" name="Building" value="{{.Building}}">
+                                </div>
+                                <div>
+                                    <label for="Apartment">Apartment</label>
+                                    <input type="text" id="Apartment" name="Apartment" value="{{.Apartment}}">
+                                </div>
+                                <div>
+                                    <label for="PhoneNumber">Phone Number</label>
+                                    <input type="text" id="PhoneNumber" name="PhoneNumber" value="{{.PhoneNumber}}">
+                                </div>
+                                <button type="submit" class="btn btn-success">Save</button>
+                                <button type="button" class="btn btn-secondary" onclick="cancelEdit({{.ID}})">Cancel</button>
+                            </form>
+
+                            <!-- Кнопка для отображения формы редактирования -->
+                            <button type="button" class="btn btn-warning" id="update-btn-{{.ID}}" onclick="showEditForm({{.ID}})">Update</button>
+
+
+                            <form action="/" method="POST">
+                                <input type="hidden" name="certain-delete" value="{{.ID}}">
+                                <button type="submit" class="btn btn-danger" id="delete-btn-{{.ID}}">Delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 {{end}}
