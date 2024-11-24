@@ -147,6 +147,12 @@ func SubCertainUpdateHandler(r *http.Request) {
 	data.Apartment = r.FormValue("Apartment")
 	data.PhoneNumber = r.FormValue("PhoneNumber")
 
+	jsonData := formJsonStr(data)
+	_, err := http.Post("http://127.0.0.1:8080/certain-update", "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		log.Println(err.Error())
+	}
+	fmt.Println("Next params is a data have gotten from form")
 	fmt.Println(data.ID)
 	fmt.Println(data.FirstName)
 	fmt.Println(data.LastName)
@@ -156,4 +162,5 @@ func SubCertainUpdateHandler(r *http.Request) {
 	fmt.Println(data.Building)
 	fmt.Println(data.Apartment)
 	fmt.Println(data.PhoneNumber)
+	fmt.Println()
 }

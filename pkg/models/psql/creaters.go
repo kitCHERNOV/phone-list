@@ -8,7 +8,7 @@ import (
 
 func AllRows() string {
 	Query := "SELECT main.id, firstname.firstname_val, lastname.lastname_val, middlename.middlename_val, street.street_val," +
-		"house.house_val, apartment.apartment_val, building.building_val, phonenumber.phonenumber_val " +
+		"house.house_val, building.building_val, apartment.apartment_val, phonenumber.phonenumber_val " +
 		"FROM main " +
 		"JOIN firstname ON firstname.id = main.first_name " +
 		"JOIN lastname ON lastname.id = main.last_name " +
@@ -22,8 +22,8 @@ func AllRows() string {
 }
 
 func CreateSqlQuery(storage *models.PersonData) string {
-	Query := "SELECT firstname.firstname_val, lastname.lastname_val, middlename.middlename_val, street.street_val," +
-		"house.house_val, apartment.apartment_val, building.building_val, phonenumber.phonenumber_val " +
+	Query := "SELECT main.id, firstname.firstname_val, lastname.lastname_val, middlename.middlename_val, street.street_val," +
+		"house.house_val, building.building_val, apartment.apartment_val, phonenumber.phonenumber_val " +
 		"FROM main " +
 		"JOIN firstname ON firstname.id = main.first_name " +
 		"JOIN lastname ON lastname.id = main.last_name " +
@@ -66,8 +66,9 @@ func CreateSqlQuery(storage *models.PersonData) string {
 	return Query
 }
 
-func CreateSubUpdateQuery(m *TeleSp, storage *models.PersonData) [8]int {
+func CreateSubUpdateQuery(m *TeleSp, storage *models.PersonData) ([8]int, int) {
 	var params = [8]int{}
+	var id = storage.ID
 	tx, err := m.DB.Begin()
 	if err != nil {
 		log.Println(err)
@@ -86,53 +87,45 @@ func CreateSubUpdateQuery(m *TeleSp, storage *models.PersonData) [8]int {
 		}
 	}()
 
-	// Execute sql queries
-	if storage.FirstName != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_firstname($1);", storage.FirstName).Scan(&params[0])
-		if err != nil {
-			log.Fatal(err)
-		}
+	// Execute sql querie
+	err = tx.QueryRow("SELECT insert_or_get_id_of_firstname($1);", storage.FirstName).Scan(&params[0])
+	if err != nil {
+		log.Fatal(err)
 	}
-	if storage.LastName != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_lastname($1);", storage.LastName).Scan(&params[1])
-		if err != nil {
-			log.Fatal(err)
-		}
+
+	err = tx.QueryRow("SELECT insert_or_get_id_of_lastname($1);", storage.LastName).Scan(&params[1])
+	if err != nil {
+		log.Fatal(err)
 	}
-	if storage.MiddleName != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_middlename($1);", storage.MiddleName).Scan(&params[2])
-		if err != nil {
-			tx.Rollback()
-		}
+
+	err = tx.QueryRow("SELECT insert_or_get_id_of_middlename($1);", storage.MiddleName).Scan(&params[2])
+	if err != nil {
+		tx.Rollback()
 	}
-	if storage.Street != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_street($1);", storage.Street).Scan(&params[3])
-		if err != nil {
-			log.Fatal(err)
-		}
+
+	err = tx.QueryRow("SELECT insert_or_get_id_of_street($1);", storage.Street).Scan(&params[3])
+	if err != nil {
+		log.Fatal(err)
 	}
-	if storage.House != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_house($1);", storage.House).Scan(&params[4])
-		if err != nil {
-			log.Fatal(err)
-		}
+	err = tx.QueryRow("SELECT insert_or_get_id_of_house($1);", storage.House).Scan(&params[4])
+	if err != nil {
+		log.Fatal(err)
 	}
-	if storage.Building != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_building($1);", storage.Building).Scan(&params[5])
-		if err != nil {
-			log.Fatal(err)
-		}
+
+	err = tx.QueryRow("SELECT insert_or_get_id_of_building($1);", storage.Building).Scan(&params[5])
+	if err != nil {
+		log.Fatal(err)
 	}
-	if storage.Apartment != "" {
-		err := tx.QueryRow("SELECT insert_or_get_id_of_apartment($1);", storage.Apartment).Scan(&params[6])
-		if err != nil {
-			log.Fatal(err)
-		}
+
+	err = tx.QueryRow("SELECT insert_or_get_id_of_apartment($1);", storage.Apartment).Scan(&params[6])
+	if err != nil {
+		log.Fatal(err)
 	}
+
 	err = tx.QueryRow("SELECT insert_or_get_id_of_phonenumber($1);", storage.PhoneNumber).Scan(&params[7])
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("params", params)
-	return params
+	return params, id
 }

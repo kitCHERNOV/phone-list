@@ -22,8 +22,7 @@ func main() {
 
 	// Work with certain elements
 	mux.HandleFunc("/certain-delete", web.CertainDeleteHandler)
-	// mux.HandleFunc("/snippet", web.ShowSnippet)
-	// mux.HandleFunc("/snippet/create", web.CreateSnippet)
+	mux.HandleFunc("/certain-update", web.CertainUpdateHandler)
 
 	fileServer := http.FileServer(http.Dir("./internal/static"))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))

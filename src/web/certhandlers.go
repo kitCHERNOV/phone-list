@@ -2,6 +2,7 @@ package web
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -36,4 +37,24 @@ func CertainDeleteHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("err of call CertainDelete into database: ", err)
 	}
 	log.Println("main row was seccessed deleted")
+}
+
+func CertainUpdateHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("CertainUpdateHandler called")
+	var data models.PersonData
+
+	body, err := io.ReadAll(r.Body)
+	decodErr := json.Unmarshal(body, &data)
+	if decodErr != nil {
+		http.Error(w, decodErr.Error(), http.StatusBadRequest)
+	}
+	fmt.Println(data)
+	db, err := psql.OpenConn()
+	if err != nil {
+		log.Println("err of OpenConn"+"", err)
+	}
+	err = db.CertainUpdate(&data)
+	if err != nil {
+		log.Println("err of call CertainUpdate into database: ", err)
+	}
 }

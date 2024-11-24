@@ -107,7 +107,7 @@ func AddHandler(w http.ResponseWriter, r *http.Request) {
 	if err := decoder.Decode(&data); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
-
+	fmt.Println("\nWarning\n", "building: ", data.Building, "\n", "apartment: ", data.Apartment)
 	db, err := psql.OpenConn()
 	if err != nil {
 		log.Println(err)
@@ -192,6 +192,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			//}
 
 			err = tp.Execute(w, showData)
+			fmt.Println(showData)
 
 			if err != nil {
 				log.Println(err.Error())
@@ -262,6 +263,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("Certain update function called")
 
 			sh.SubCertainUpdateHandler(r)
+
 			tp, err := template.ParseFiles("./internal/html/main.html")
 			if err != nil {
 				log.Println(err.Error())

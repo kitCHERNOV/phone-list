@@ -69,7 +69,7 @@ func (m *TeleSp) Insert(storage *models.PersonData) error {
 
 func (m *TeleSp) Update(storage *models.PersonData) error {
 	//var query string
-	var params = CreateSubUpdateQuery(m, storage)
+	params, _ := CreateSubUpdateQuery(m, storage)
 
 	tx, err := m.DB.Begin()
 	if err != nil {
@@ -146,6 +146,8 @@ func (m *TeleSp) Get(storage *models.PersonData) []models.PersonData {
 		rows.Scan(&p.ID, &p.FirstName, &p.LastName, &p.MiddleName, &p.Street, &p.House, &p.Building, &p.Apartment, &p.PhoneNumber)
 		response = append(response, p)
 	}
+
+	fmt.Println("Select data basing params: ", response)
 
 	return response
 }

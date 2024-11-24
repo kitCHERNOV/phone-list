@@ -145,6 +145,17 @@
         updateButton.style.display = 'none'
         deleteButton.style.display = 'none'
     }
+
+    function changeData(id) {
+        // document.getElementById('FirstName') = 'Misha';
+        // document.querySelector()
+        // var value = document.getElementsByName('FirstName')[0].value
+        var form = document.getElementById('edit-form-'+id)
+        // var value = form.getElementById('FirstName')
+
+        console.log(form.textContent)
+    }
+
     // // Функция отправки формы
     // function updateRow(event, id) {
     //     event.
@@ -197,7 +208,7 @@
                                 <input type="hidden" name="certain-update" value="{{.ID}}">
                                 <div>
                                     <label for="FirstName">First Name</label>
-                                    <input type="text" id="FirstName" name="FirstName" value="{{.FirstName}}">
+                                    <input class="aboba" type="text" id="FirstName" name="FirstName" value="{{.FirstName}}">
                                 </div>
                                 <div>
                                     <label for="LastName">Last Name</label>
@@ -227,6 +238,7 @@
                                     <label for="PhoneNumber">Phone Number</label>
                                     <input type="text" id="PhoneNumber" name="PhoneNumber" value="{{.PhoneNumber}}">
                                 </div>
+<!--                              type = submit-->
                                 <button type="submit" class="btn btn-success">Save</button>
                                 <button type="button" class="btn btn-secondary" onclick="cancelEdit({{.ID}})">Cancel</button>
                             </form>
