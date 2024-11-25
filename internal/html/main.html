@@ -147,13 +147,19 @@
     }
 
     function changeData(id) {
-        // document.getElementById('FirstName') = 'Misha';
-        // document.querySelector()
-        // var value = document.getElementsByName('FirstName')[0].value
-        var form = document.getElementById('edit-form-'+id)
-        // var value = form.getElementById('FirstName')
+        var value = document.getElementById('FirstName-'+id).value;
 
-        console.log(form.textContent)
+        // const firstNameCell = document.getElementsByClassName('row-${id}');
+        console.log(`td.first-name-${id}`)
+        const firstNameCell = document.querySelector(`#row-${id} .first-name-${id}`);
+
+        if (firstNameCell.innerHTML) {
+            firstNameCell.innerHTML = value; // change text value
+        } else {
+            console.error(`Ячейка с ID row-${id} не найдена.`);
+        }
+
+        console.log(value)
     }
 
     // // Функция отправки формы
@@ -164,6 +170,12 @@
     function cancelEdit(id) {
         var form = document.getElementById('edit-form-' + id);
         form.style.display = 'none'; // Скрываем форму
+
+        var updateButton = document.getElementById('update-btn-' + id)
+        var deleteButton = document.getElementById('delete-btn-' + id)
+
+        updateButton.style.display = 'block'
+        deleteButton.style.display = 'block'
     }
     </script>
     <!-- Phone Book Data -->
@@ -188,8 +200,8 @@
                 </thead>
                 <tbody>
                 {{range .}}
-                <tr>
-                    <td>{{.FirstName}}</td>
+                <tr id="row-{{.ID}}">
+                    <td class="first-name-{{.ID}}">{{.FirstName}}</td>
                     <td>{{.LastName}}</td>
                     <td>{{.MiddleName}}</td>
                     <td>{{.Street}}</td>
@@ -204,42 +216,43 @@
 <!--                                <button type="submit" class="btn btn-warning">Update</button>-->
 <!--                            </form>-->
                             <!-- Форма для редактирования -->
+<!--                            action="/" method="POST"-->
                             <form action="/" method="POST" id="edit-form-{{.ID}}" style="display:none;">
                                 <input type="hidden" name="certain-update" value="{{.ID}}">
                                 <div>
-                                    <label for="FirstName">First Name</label>
-                                    <input class="aboba" type="text" id="FirstName" name="FirstName" value="{{.FirstName}}">
+                                    <label for="FirstName-{{.ID}}">First Name</label>
+                                    <input type="text" id="FirstName-{{.ID}}" name="FirstName" value="{{.FirstName}}">
                                 </div>
                                 <div>
-                                    <label for="LastName">Last Name</label>
-                                    <input type="text" id="LastName" name="LastName" value="{{.LastName}}">
+                                    <label for="LastName-{{.ID}}">Last Name</label>
+                                    <input type="text" id="LastName-{{.ID}}" name="LastName" value="{{.LastName}}">
                                 </div>
                                 <div>
-                                    <label for="MiddleName">Middle Name</label>
-                                    <input type="text" id="MiddleName" name="MiddleName" value="{{.MiddleName}}">
+                                    <label for="MiddleName-{{.ID}}">Middle Name</label>
+                                    <input type="text" id="MiddleName-{{.ID}}" name="MiddleName" value="{{.MiddleName}}">
                                 </div>
                                 <div>
-                                    <label for="Street">Street</label>
-                                    <input type="text" id="Street" name="Street" value="{{.Street}}">
+                                    <label for="Street-{{.ID}}">Street</label>
+                                    <input type="text" id="Street-{{.ID}}" name="Street" value="{{.Street}}">
                                 </div>
                                 <div>
-                                    <label for="House">House</label>
-                                    <input type="text" id="House" name="House" value="{{.House}}">
+                                    <label for="House-{{.ID}}">House</label>
+                                    <input type="text" id="House-{{.ID}}" name="House" value="{{.House}}">
                                 </div>
                                 <div>
-                                    <label for="Building">Building</label>
-                                    <input type="text" id="Building" name="Building" value="{{.Building}}">
+                                    <label for="Building-{{.ID}}">Building</label>
+                                    <input type="text" id="Building-{{.ID}}" name="Building" value="{{.Building}}">
                                 </div>
                                 <div>
-                                    <label for="Apartment">Apartment</label>
-                                    <input type="text" id="Apartment" name="Apartment" value="{{.Apartment}}">
+                                    <label for="Apartment-{{.ID}}">Apartment</label>
+                                    <input type="text" id="Apartment-{{.ID}}" name="Apartment" value="{{.Apartment}}">
                                 </div>
                                 <div>
-                                    <label for="PhoneNumber">Phone Number</label>
-                                    <input type="text" id="PhoneNumber" name="PhoneNumber" value="{{.PhoneNumber}}">
+                                    <label for="PhoneNumber-{{.ID}}">Phone Number</label>
+                                    <input type="text" id="PhoneNumber-{{.ID}}" name="PhoneNumber" value="{{.PhoneNumber}}">
                                 </div>
 <!--                              type = submit-->
-                                <button type="submit" class="btn btn-success">Save</button>
+                                <button type="button" class="btn btn-success" onclick="changeData({{.ID}})">Save</button>
                                 <button type="button" class="btn btn-secondary" onclick="cancelEdit({{.ID}})">Cancel</button>
                             </form>
 
