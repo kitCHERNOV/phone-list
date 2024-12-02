@@ -133,6 +133,33 @@
         </form>
     </div>
     <script>
+    function sendUpdateData(id, firstname, lastname, middlename, street, house, building, apartment, phonenumber) {
+
+        // const url = "/certain/certain-update"
+        const url = "/index/update"
+
+        const data = {
+            id: id,
+            first_name: firstname,
+            last_name: lastname,
+            middle_name: middlename,
+            street: street,
+            house: house,
+            building: building,
+            apartment: apartment,
+            phone_number: phonenumber
+        }
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Указываем, что отправляем JSON
+            },
+            body: JSON.stringify(data) // Преобразуем объект в строку JSON
+        })
+
+    }
+
     // Функция для отображения формы редактирования
     function showEditForm(id) {
         var form = document.getElementById('edit-form-' + id);
@@ -147,19 +174,78 @@
     }
 
     function changeData(id) {
-        var value = document.getElementById('FirstName-'+id).value;
+        var FirstNameValue = document.getElementById('FirstName-'+id).value;
+        var LastNameValue = document.getElementById('LastName-'+id).value;
+        var MiddleNameValue = document.getElementById('MiddleName-'+id).value;
+        var StreetValue = document.getElementById('Street-'+id).value;
+        var HouseValue = document.getElementById('House-'+id).value;
+        var BuildingValue = document.getElementById('Building-'+id).value;
+        var ApartmentValue = document.getElementById('Apartment-'+id).value;
+        var PhoneNumberValue = document.getElementById('PhoneNumber-'+id).value;
 
         // const firstNameCell = document.getElementsByClassName('row-${id}');
-        console.log(`td.first-name-${id}`)
+        // console.log(`td.first-name-${id}`)
+
         const firstNameCell = document.querySelector(`#row-${id} .first-name-${id}`);
+        const lastNameCell = document.querySelector(`#row-${id} .last-name-${id}`);
+        const middleNameCell = document.querySelector(`#row-${id} .middle-name-${id}`);
+        const streetCell = document.querySelector(`#row-${id} .street-${id}`);
+        const houseCell = document.querySelector(`#row-${id} .house-${id}`);
+        const buildingCell = document.querySelector(`#row-${id} .building-${id}`);
+        const apartmentCell = document.querySelector(`#row-${id} .apartment-${id}`);
+        const phoneNumberCell = document.querySelector(`#row-${id} .phone-number-${id}`);
 
         if (firstNameCell.innerHTML) {
-            firstNameCell.innerHTML = value; // change text value
+            firstNameCell.innerHTML = FirstNameValue; // change text value
         } else {
             console.error(`Ячейка с ID row-${id} не найдена.`);
         }
 
-        console.log(value)
+        if (lastNameCell) {
+            lastNameCell.innerHTML = LastNameValue; // change text value
+        } else {
+            console.error(`Ячейка с ID row-${id} и классом last-name-${id} не найдена.`);
+        }
+
+        if (middleNameCell) {
+            middleNameCell.innerHTML = MiddleNameValue; // change text value
+        } else {
+            console.error(`Ячейка с ID row-${id} и классом middle-name-${id} не найдена.`);
+        }
+
+        if (streetCell) {
+            streetCell.innerHTML = StreetValue; // change text value
+        } else {
+            console.error(`Ячейка с ID row-${id} и классом street-${id} не найдена.`);
+        }
+
+        if (houseCell) {
+            houseCell.innerHTML = HouseValue; // change text value
+        } else {
+            console.error(`Ячейка с ID row-${id} и классом house-${id} не найдена.`);
+        }
+
+        if (buildingCell) {
+            buildingCell.innerHTML = BuildingValue; // change text value
+        } else {
+            console.error(`Ячейка с ID row-${id} и классом building-${id} не найдена.`);
+        }
+
+        if (apartmentCell) {
+            apartmentCell.innerHTML = ApartmentValue; // change text value
+        } else {
+            console.error(`Ячейка с ID row-${id} и классом apartment-${id} не найдена.`);
+        }
+
+        if (phoneNumberCell) {
+            phoneNumberCell.innerHTML = PhoneNumberValue; // change text value
+        } else {
+            console.error(`Ячейка с ID row-${id} и классом phone-number-${id} не найдена.`);
+        }
+
+        sendUpdateData(id, FirstNameValue, LastNameValue,
+            MiddleNameValue, StreetValue, HouseValue,
+        )
     }
 
     // // Функция отправки формы
@@ -202,13 +288,13 @@
                 {{range .}}
                 <tr id="row-{{.ID}}">
                     <td class="first-name-{{.ID}}">{{.FirstName}}</td>
-                    <td>{{.LastName}}</td>
-                    <td>{{.MiddleName}}</td>
-                    <td>{{.Street}}</td>
-                    <td>{{.House}}</td>
-                    <td>{{.Building}}</td>
-                    <td>{{.Apartment}}</td>
-                    <td>{{.PhoneNumber}}</td>
+                    <td class="last-name-{{.ID}}">{{.LastName}}</td>
+                    <td class="middle-name-{{.ID}}">{{.MiddleName}}</td>
+                    <td class="street-{{.ID}}">{{.Street}}</td>
+                    <td class="house-{{.ID}}">{{.House}}</td>
+                    <td class="building-{{.ID}}">{{.Building}}</td>
+                    <td class="apartment-{{.ID}}">{{.Apartment}}</td>
+                    <td class="phone-number-{{.ID}}">{{.PhoneNumber}}</td>
                     <td>
                         <div class="d-flex">
 <!--                            <form action="/" method="POST">-->

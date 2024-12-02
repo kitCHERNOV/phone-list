@@ -137,18 +137,24 @@ func SubCertainDeleteHandler(r *http.Request) {
 
 func SubCertainUpdateHandler(r *http.Request) {
 	data := models.PersonData{}
-	data.ID, _ = strconv.Atoi(r.FormValue("certain-update"))
-	data.FirstName = r.FormValue("FirstName")
-	data.LastName = r.FormValue("LastName")
-	data.MiddleName = r.FormValue("MiddleName")
-	data.Street = r.FormValue("Street")
-	data.House = r.FormValue("House")
-	data.Building = r.FormValue("Building")
-	data.Apartment = r.FormValue("Apartment")
-	data.PhoneNumber = r.FormValue("PhoneNumber")
+	//data.ID, _ = strconv.Atoi(r.FormValue("certain-update"))
+	//data.FirstName = r.FormValue("FirstName")
+	//data.LastName = r.FormValue("LastName")
+	//data.MiddleName = r.FormValue("MiddleName")
+	//data.Street = r.FormValue("Street")
+	//data.House = r.FormValue("House")
+	//data.Building = r.FormValue("Building")
+	//data.Apartment = r.FormValue("Apartment")
+	//data.PhoneNumber = r.FormValue("PhoneNumber")
+
+	body, err := io.ReadAll(r.Body)
+	decodErr := json.Unmarshal(body, &data)
+	if decodErr != nil {
+		log.Println(decodErr.Error())
+	}
 
 	jsonData := formJsonStr(data)
-	_, err := http.Post("http://127.0.0.1:8080/certain-update", "application/json", bytes.NewBuffer(jsonData))
+	_, err = http.Post("http://127.0.0.1:8080/certain/certain-update", "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Println(err.Error())
 	}
