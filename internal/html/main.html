@@ -127,8 +127,8 @@
             <div class="text-center mt-4">
                 <input type="submit" name="search" class="btn btn-outline-success" value="Select">
                 <input type="submit" name="add" class="btn btn-outline-primary" value="Add">
-                <input type="submit" name="update" class="btn btn-outline-warning" value="Update">
-                <input type="submit" name="delete" class="btn btn-outline-danger" value="Delete">
+<!--                <input type="submit" name="update" class="btn btn-outline-warning" value="Update">-->
+<!--                <input type="submit" name="delete" class="btn btn-outline-danger" value="Delete">-->
             </div>
         </form>
     </div>
@@ -197,55 +197,66 @@
 
         if (firstNameCell.innerHTML) {
             firstNameCell.innerHTML = FirstNameValue; // change text value
+            console.log(`firstname: ${FirstNameValue}`)
         } else {
             console.error(`Ячейка с ID row-${id} не найдена.`);
         }
 
         if (lastNameCell) {
             lastNameCell.innerHTML = LastNameValue; // change text value
+            console.log(`lastname: ${LastNameValue}`)
         } else {
             console.error(`Ячейка с ID row-${id} и классом last-name-${id} не найдена.`);
         }
 
         if (middleNameCell) {
             middleNameCell.innerHTML = MiddleNameValue; // change text value
+            console.log(`middlename: ${MiddleNameValue}`)
         } else {
             console.error(`Ячейка с ID row-${id} и классом middle-name-${id} не найдена.`);
         }
 
         if (streetCell) {
             streetCell.innerHTML = StreetValue; // change text value
+            console.log(`street: ${StreetValue}`)
         } else {
             console.error(`Ячейка с ID row-${id} и классом street-${id} не найдена.`);
         }
 
         if (houseCell) {
             houseCell.innerHTML = HouseValue; // change text value
+            console.log(`house: ${HouseValue}`)
         } else {
             console.error(`Ячейка с ID row-${id} и классом house-${id} не найдена.`);
         }
 
         if (buildingCell) {
             buildingCell.innerHTML = BuildingValue; // change text value
+            console.log(`building: ${BuildingValue}`)
         } else {
             console.error(`Ячейка с ID row-${id} и классом building-${id} не найдена.`);
         }
 
         if (apartmentCell) {
             apartmentCell.innerHTML = ApartmentValue; // change text value
+            console.log(`apartment: ${ApartmentValue}`)
         } else {
             console.error(`Ячейка с ID row-${id} и классом apartment-${id} не найдена.`);
         }
 
         if (phoneNumberCell) {
             phoneNumberCell.innerHTML = PhoneNumberValue; // change text value
+            console.log(`phonenumber: ${PhoneNumberValue}`)
         } else {
             console.error(`Ячейка с ID row-${id} и классом phone-number-${id} не найдена.`);
         }
 
         sendUpdateData(id, FirstNameValue, LastNameValue,
             MiddleNameValue, StreetValue, HouseValue,
+            BuildingValue, ApartmentValue, PhoneNumberValue
         )
+
+        cancelEdit(id)
     }
 
     // // Функция отправки формы

@@ -129,7 +129,7 @@ func SubCertainDeleteHandler(r *http.Request) {
 
 	jsonData := formJsonStr(models.PersonData{ID: valueId})
 
-	_, err = http.Post("http://127.0.0.1:8080/certain-delete", "application/json", bytes.NewBuffer(jsonData))
+	_, err = http.Post("http://127.0.0.1:8080/certain/certain-delete", "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -148,6 +148,8 @@ func SubCertainUpdateHandler(r *http.Request) {
 	//data.PhoneNumber = r.FormValue("PhoneNumber")
 
 	body, err := io.ReadAll(r.Body)
+	//fmt.Println("Write a body of request:")
+	//fmt.Println(string(body))
 	decodErr := json.Unmarshal(body, &data)
 	if decodErr != nil {
 		log.Println(decodErr.Error())
