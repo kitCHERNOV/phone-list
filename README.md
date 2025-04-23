@@ -24,14 +24,13 @@ git clone https://github.com/kitCHERNOV/phone-list.git
 cd phone-list
 2. Настройка переменных окружения
 Создайте .env файл и укажите в нём:
-
-env
+```
 DB_HOST=localhost
 PASSWORD=1234
 USER_NAME=postgres
 DB_NAME=dbname
 PORT=5432
-
+```
 3. Запуск
 Через Go
 bash
