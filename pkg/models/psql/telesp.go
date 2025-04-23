@@ -3,19 +3,25 @@ package psql
 import (
 	"database/sql"
 	"fmt"
+	"os"
+
 	"github.com/lib/pq"
+
 	//_ "github.com/lib/pq"
 	"log"
 	"telesp/pkg/models"
+
+	"github.com/joho/godotenv"
 )
 
-var connection connParams = connParams{
-	host:     "localhost",
-	password: "1234",
-	user:     "postgres",
-	dbname:   "telesp",
-	port:     "5432",
-}
+// var connection connParams = connParams{
+// 	host:     "localhost",
+// 	password: "1234",
+// 	user:     "postgres",
+// 	dbname:   "telesp",
+// 	port:     "5432",
+// }
+
 
 type connParams struct {
 	user     string
@@ -29,11 +35,28 @@ type TeleSp struct {
 	DB *sql.DB
 }
 
+func setConnationsParams() connParams {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Read error .env file")
+	}
+
+	return connParams{
+		host:     os.Getenv("DB_HOST"),
+		password: os.Getenv("PASSWORD"),
+		user:     os.Getenv("USER_NAME"),
+		dbname:   os.Getenv("DB_NAME"),
+		port:     os.Getenv("PORT"),
+	}
+
+}
+
 // TODO: creation all funcs of work with db
 func OpenConn() (TeleSp, error) {
-
+	connection := setConnationsParams()
 	connStr := func() (CS string) { //MARK: CS = shorter name of connStr
 		// SASL -> "user=username password=password host=localhost dbname=mydb sslmode=disable"
+
 		CS = fmt.Sprintf("user=%s port=%s password=%s host=%s dbname=%s sslmode=disable", connection.user, connection.port, connection.password, connection.host, connection.dbname)
 		return CS
 	}()
