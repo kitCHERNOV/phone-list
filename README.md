@@ -20,7 +20,7 @@ PostgreSQL
 bash
 Копировать
 Редактировать
-git clone https://github.com/your-username/phonebook.git
+git clone https://github.com/kitCHERNOV/phone-list.git
 cd phone-list
 2. Настройка переменных окружения
 Создайте .env файл и укажите в нём:
